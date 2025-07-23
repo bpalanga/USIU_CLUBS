@@ -9,6 +9,6 @@ function fetch_all_events() {
 
 function save_event($data) {
     global $pdo;
-    $stmt = $pdo->prepare("INSERT INTO events (title, description, date) VALUES (?, ?, ?)");
-    $stmt->execute([$data['title'], $data['description'], $data['date']]);
+    $stmt = $pdo->prepare("INSERT INTO events (title, descreption, date) VALUES (?, ?, ?)");
+    $stmt->execute([$data['title'], $data['descreption'], $data['date']]);
 }

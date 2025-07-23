@@ -12,6 +12,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN echo "FallbackResource /index.php" > /etc/apache2/conf-available/fallback.conf && \
     a2enconf fallback
 
+# Configure PHP to log errors to STDERR (shown in terminal via `docker logs`)
+RUN echo "log_errors = On\nerror_log = /proc/self/fd/2" > /usr/local/etc/php/conf.d/docker-php-logging.ini
+
 COPY . /var/www/html
 
 EXPOSE 80

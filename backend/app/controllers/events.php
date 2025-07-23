@@ -9,6 +9,7 @@ function get_all_events() {
 
 function create_event() {
     $data = json_decode(file_get_contents('php://input'), true);
+    // error_log("receved data".print_r($data,true));
     save_event($data);
     echo json_encode(['message' => 'Event created successfully']);
 }
