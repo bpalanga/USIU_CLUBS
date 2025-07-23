@@ -13,7 +13,20 @@ function handle_request() {
     } elseif ($uri === '/api/events' && $method === 'POST') {
         create_event();
 
-    } elseif (preg_match('#^/api/events/(\d+)/register$#', $uri, $matches) && $method === 'POST') {
+    }elseif (preg_match('#^/api/events/(\d+)$#', $uri, $matches) && $method === 'GET') {
+    $event_id = $matches[1];
+    get_event($event_id);
+
+// Update event
+} elseif (preg_match('#^/api/events/(\d+)$#', $uri, $matches) && $method === 'PUT') {
+    $event_id = $matches[1];
+    edit_event($event_id);
+
+// Delete event
+} elseif (preg_match('#^/api/events/(\d+)$#', $uri, $matches) && $method === 'DELETE') {
+    $event_id = $matches[1];
+    remove_event($event_id);
+ } elseif (preg_match('#^/api/events/(\d+)/register$#', $uri, $matches) && $method === 'POST') {
         $event_id = $matches[1];
         register_for_event($event_id);
 
