@@ -9,3 +9,4 @@ try {
 } catch (PDOException $e) {
     die("DB connection failed: " . $e->getMessage());
 }
+
