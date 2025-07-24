@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Azure
 on:
   push:
     branches:
-      - main  # 
+      - main  # or 'master' if that's your default
 
 jobs:
   build-and-push:
