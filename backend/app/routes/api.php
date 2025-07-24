@@ -30,7 +30,22 @@ function handle_request() {
         $event_id = $matches[1];
         register_for_event($event_id);
 
-    } elseif (preg_match('#^/api/events/(\d+)/comments$#', $uri, $matches) && $method === 'GET') {
+        // registration
+    }
+    elseif ($uri === '/api/registrations' && $method === 'GET') {
+    get_all_registrations();
+
+// Get one registration
+} elseif (preg_match('#^/api/registrations/(\d+)$#', $uri, $matches) && $method === 'GET') {
+    $id = $matches[1];
+    get_registration($id);
+
+// Delete registration
+} elseif (preg_match('#^/api/registrations/(\d+)$#', $uri, $matches) && $method === 'DELETE') {
+    $id = $matches[1];
+    remove_registration($id);
+
+ } elseif (preg_match('#^/api/events/(\d+)/comments$#', $uri, $matches) && $method === 'GET') {
         $event_id = $matches[1];
         get_comments($event_id);
 
