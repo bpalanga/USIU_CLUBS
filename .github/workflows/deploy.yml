@@ -20,7 +20,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.AZURE_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest .
+        docker build -t ${{ secrets.AZURE_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest ./backend
+
 
     - name: Push Docker image
       run: |
