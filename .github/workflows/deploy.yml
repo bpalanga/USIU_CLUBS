@@ -1,22 +1,21 @@
-name: Build and Push Docker Image to ACR
+name: Build and Push Docker Image to Azure
 
 on:
   push:
     branches:
-      - main  # change this if you use a different branch name
+      - main  # or 'master' if that's your default
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Log in to Azure Container Registry
       run: |
-        echo "${{ secrets.AZURE_REGISTRY_PASSWORD }}" | \
-        docker login ${{ secrets.AZURE_REGISTRY }} \
+        echo "${{ secrets.AZURE_REGISTRY_PASSWORD }}" | docker login ${{ secrets.AZURE_REGISTRY }} \
         -u ${{ secrets.AZURE_REGISTRY_USERNAME }} --password-stdin
 
     - name: Build Docker image
