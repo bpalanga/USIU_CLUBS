@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USIU-Africa Campus Events Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+"C:\Users\USER\OneDrive\Dokumenty\assignment[1]\assignment\fro
+    <!-- link js here   -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h1>USIU-Africa Campus Events</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/assignment/frontend/index.php"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/assignment/frontend/index.php#event-section"><i class="fas fa-calendar-day"></i> Events</a></li>
+                    <li><a href="#"><i class="fas fa-user-friends"></i> Clubs</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Notifications</a></li>
+                    <li id="authNav">
+                        <div class="nav-button" id="loginBtn">Login / Sign Up</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Discover Campus Events & Activities</h2>
+            <p>Join thousands of USIU-Africa students in engaging events, workshops, and social gatherings organized by our vibrant clubs and departments.</p>
+            <button class="cta-button" id="exploreBtn">Explore Events</button>
+        </div>
+    </section>
+
+    <section class="events-section">
+        <h2 class="section-title">Upcoming Events</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active">All Events</button>
+            <button class="filter-btn">Drama Club</button>
+            <button class="filter-btn">Hotel & Tourism</button>
+            <button class="filter-btn">Sports</button>
+            <button class="filter-btn">Academics</button>
+        </div>
+        
+        <div class="events-grid" id="eventsContainer">
+            <!-- Events will be loaded dynamically -->
+        </div>
+    </section>
+
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalEventTitle">Event Title</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="event-full-details">
+                    <div class="event-full-image" id="modalEventImage"></div>
+                    <div class="event-info">
+                        <div class="event-info-item">
+                            <i class="fas fa-calendar"></i>
+                            <div><strong>Date:</strong> <span id="modalEventDate"></span></div>
+                        </div>
+                        <div class="event-info-item">
+                            <i class="fas fa-clock"></i>
+                            <div><strong>Time:</strong> <span id="modalEventTime"></span></div>
+                        </div>
+                        <div class="event-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div><strong>Location:</strong> <span id="modalEventLocation"></span></div>
+                        </div>
+                        <div class="event-info-item">
+                            <i class="fas fa-users"></i>
+                            <div><strong>Organizer:</strong> <span id="modalEventOrganizer"></span></div>
+                        </div>
+                        <div class="event-info-item">
+                            <i class="fas fa-info-circle"></i>
+                            <div><strong>Description:</strong> <p id="modalEventDescription"></p></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="form-title">Register for this Event</h3>
+                    <form id="registrationForm">
+                        <input type="hidden" id="eventId" value="">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
+                            <div class="invalid-feedback">Please enter your full name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                            <div class="invalid-feedback">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentId">Student ID</label>
+                            <input type="text" id="studentId" class="form-control" placeholder="Enter your student ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department" class="form-control">
+                                <option value="">Select your department</option>
+                                <option value="business">School of Business</option>
+                                <option value="science">School of Science & Technology</option>
+                                <option value="hospitality">School of Hospitality</option>
+                                <option value="arts">School of Arts</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-btn">Register Now</button>
+                    </form>
+                </div>
+                
+                <div class="comments-container">
+                    <h3 class="form-title">Event Comments</h3>
+                    <div id="commentsList">
+                        <!-- Comments will be loaded here via AJAX -->
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3 class="form-title">Add a Comment</h3>
+                        <form id="commentForm">
+                            <input type="hidden" id="commentEventId" value="">
+                            <div class="form-group">
+                                <label for="commentName">Your Name</label>
+                                <input type="text" id="commentName" class="form-control" placeholder="Enter your name" required>
+                                <div class="invalid-feedback">Please enter your name</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="commentText">Your Comment</label>
+                                <textarea id="commentText" class="form-control" rows="3" placeholder="Share your thoughts..." required></textarea>
+                                <div class="invalid-feedback">Please enter your comment</div>
+                            </div>
+                            <button type="submit" class="submit-btn">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="authModalTitle">Login to Your Account</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Login</div>
+                    <div class="auth-tab" data-tab="signup">Sign Up</div>
+                </div>
+                
+                <form id="loginForm" class="auth-form active">
+                    <div class="form-group">
+                        <label for="loginIdentifier">Email, Username or Student ID</label>
+                        <input type="text" id="loginIdentifier" class="form-control" placeholder="Enter your email, username or ID" required>
+                        <div class="invalid-feedback">Please enter your identifier</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                        <div class="invalid-feedback">Please enter your password</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Login</button>
+                        <div class="form-footer">
+                            <a href="#" id="forgotPassword">Forgot Password?</a>
+                        </div>
+                    </div>
+                </form>
+                
+                <form id="signupForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="signupFullName">Full Name</label>
+                        <input type="text" id="signupFullName" class="form-control" placeholder="Enter your full name" required>
+                        <div class="invalid-feedback">Please enter your full name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupStudentId">Student ID</label>
+                        <input type="text" id="signupStudentId" class="form-control" placeholder="Enter your student ID" required>
+                        <div class="invalid-feedback">Please enter your student ID</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">School Email</label>
+                        <input type="email" id="signupEmail" class="form-control" placeholder="Enter your school email" required>
+                        <div class="invalid-feedback">Please enter a valid school email</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupUsername">Username</label>
+                        <input type="text" id="signupUsername" class="form-control" placeholder="Choose a username" required>
+                        <div class="invalid-feedback">Please choose a username</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+                        <div class="invalid-feedback">Password must be at least 6 characters</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+                        <div class="invalid-feedback">Passwords do not match</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Create Account</button>
+                        <div class="form-footer">
+                            Already have an account? <a href="#" id="switchToLogin">Login here</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <span id="notificationMessage">Notification message</span>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About USIU Events</h3>
+                <p>The official events platform for United States International University - Africa, connecting students with campus activities and events.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Upcoming Events</a></li>
+                    <li><a href="#">Club Directory</a></li>
+                    <li><a href="#">Event Calendar</a></li>
+                    <li><a href="#">Submit an Event</a></li>
+                    <li><a href="#">Campus Map</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> USIU-Africa, Nairobi, Kenya</li>
+                    <li><i class="fas fa-phone"></i> +254 730 116 000</li>
+                    <li><i class="fas fa-envelope"></i> events@usiu.ac.ke</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 USIU-Africa Campus Events Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>
