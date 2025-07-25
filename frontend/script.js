@@ -19,7 +19,7 @@ const loginBtn = document.getElementById('loginBtn');
 
 
 // API endpoints
-const API_BASE_URL = 'https://0ca83b46877b.ngrok-free.app'; // Update with your server URL
+const API_BASE_URL = 'https://70f2f68789cb.ngrok-free.app'; // Update with your server URL
 const EVENTS_API = `${API_BASE_URL}/api/events`;
 const LOGIN_API = `${API_BASE_URL}/backend/login.php`;
 const SIGNUP_API = `${API_BASE_URL}/backend/signup.php`;
@@ -149,15 +149,14 @@ function renderEvents(events) {
         const eventCard = document.createElement('div');
         eventCard.className = 'event-card';
         eventCard.innerHTML = `
-            // <div class="event-image" style="background-image: url('${event.image}')"></div>
             <div class="event-content">
-                // <span class="event-category">${event.organizer}</span>
+                 <span class="event-category">${event.category}</span>
                 <h3 class="event-title">${event.title}</h3>
                 <p>${event.description.substring(0, 100)}...</p>
                 <div class="event-details">
                     <div><i class="fas fa-calendar"></i> ${event.date}</div>
-                    // <div><i class="fas fa-clock"></i> ${event.time}</div>
-                    // <div><i class="fas fa-map-marker-alt"></i> ${event.location}</div>
+                    <div><i class="fas fa-clock"></i> ${event.time}</div>
+                    <div><i class="fas fa-map-marker-alt"></i> ${event.location}</div>
                 </div>
                 <div class="event-actions">
                     <button class="register-btn" data-id="${event.id}">Register Now</button>
@@ -211,9 +210,8 @@ function loadEventDetails(eventId) {
             if(data.status === 'success' && data.event) {
                 const event = data.event;
                 document.getElementById('modalEventTitle').textContent = event.title;
-                // document.getElementById('modalEventImage').style.backgroundImage = `url('${event.image}')`;
                 document.getElementById('modalEventDate').textContent = event.date;
-                // document.getElementById('modalEventTime').textContent = event.time;
+                document.getElementById('modalEventTime').textContent = event.date;
                 // document.getElementById('modalEventLocation').textContent = event.location;
                 // document.getElementById('modalEventOrganizer').textContent = event.organizer;
                 document.getElementById('modalEventDescription').textContent = event.description;

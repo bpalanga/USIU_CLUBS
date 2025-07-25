@@ -10,7 +10,14 @@ function fetch_all_events() {
 function save_event($data) {
     global $pdo;
     $stmt = $pdo->prepare("INSERT INTO events (title, category, description, date, time, location) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$data['title'], data['category'], $data['description'], $data['date'], data['time'], data['location']]);
+    $stmt->execute([
+        $data['title'],
+        $data['category'],
+        $data['description'],
+        $data['date'],
+        $data['time'],
+        $data['location']
+    ]);
 }
 
 function fetch_event_by_id($id) {
@@ -22,8 +29,16 @@ function fetch_event_by_id($id) {
 
 function update_event($id, $data) {
     global $pdo;
-    $stmt = $pdo->prepare("UPDATE events SET title = ?, description = ?, date = ? WHERE id = ?");
-    $stmt->execute([$data['title'], data['category'], $data['description'], $data['date'], data['time'], data['location'],$id]);
+    $stmt = $pdo->prepare("UPDATE events SET title = ?, category = ?, description = ?, date = ?, time = ?, location = ? WHERE id = ?");
+    $stmt->execute([
+        $data['title'],
+        $data['category'],
+        $data['description'],
+        $data['date'],
+        $data['time'],
+        $data['location'],
+        $id
+    ]);
 }
 
 function delete_event($id) {
@@ -31,4 +46,3 @@ function delete_event($id) {
     $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
     $stmt->execute([$id]);
 }
-
