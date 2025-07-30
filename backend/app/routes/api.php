@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../controllers/events.php';
 require_once __DIR__ . '/../controllers/registrations.php';
 require_once __DIR__ . '/../controllers/comment.php';
+require_once __DIR__ . '/../controllers/auth.php';
 
 function handle_request() {
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -41,7 +42,17 @@ function handle_request() {
     }elseif (preg_match('#^/api/comments/(\d+)$#', $uri, $matches) && $method === 'DELETE') {
         $comment_id = $matches[1];
         remove_comment($comment_id);
-    } else {
+
+
+        // Authentication routes
+
+    } elseif ($uri === '/api/auth/signup' && $method === 'POST') {
+    signup();
+
+} elseif ($uri === '/api/auth/signin' && $method === 'POST') {
+    signin();
+    }
+    else {
         http_response_code(404);
         echo json_encode(['error' => 'Route not found']);
     }
