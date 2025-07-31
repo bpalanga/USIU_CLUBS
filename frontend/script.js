@@ -2,7 +2,7 @@
 const eventModal = document.getElementById('eventModal');
 const authModal = document.getElementById('authModal');
 const closeModals = document.querySelectorAll('.close-modal');
-const eventsContainer = document.getElementById('eventsContainer');
+const eventsContainer = document.getElementById('events-container');
 const registrationForm = document.getElementById('registrationForm');
 const commentForm = document.getElementById('commentForm');
 const commentsList = document.getElementById('commentsList');
@@ -19,7 +19,7 @@ const loginBtn = document.getElementById('loginBtn');
 
 
 // API endpoints
-const API_BASE_URL = 'https://70f2f68789cb.ngrok-free.app'; // Update with your server URL
+const API_BASE_URL = 'https://93871a9004df.ngrok-free.app'; // Update with your server URL
 const EVENTS_API = `${API_BASE_URL}/api/events`;
 const LOGIN_API = `${API_BASE_URL}/backend/login.php`;
 const SIGNUP_API = `${API_BASE_URL}/backend/signup.php`;
