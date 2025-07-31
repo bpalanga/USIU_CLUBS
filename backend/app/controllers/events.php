@@ -8,11 +8,29 @@ function get_all_events() {
 }
 
 function create_event() {
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Unauthorized']);
+        return;
+    }
+
+    // Allow only captains and admins
+    if (!in_array($_SESSION['role'], ['captain', 'admin'])) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Only captains or admins can create events']);
+        return;
+    }
+
+
     $data = json_decode(file_get_contents('php://input'), true);
-    // error_log("receved data".print_r($data,true));
-    save_event($data);
+    $data['created_by'] = $_SESSION['user_id']; // Set creator
+
+    save_event($data); // Call model function
+
     echo json_encode(['message' => 'Event created successfully']);
 }
+
+
 
 function get_event($id) {
     $event = fetch_event_by_id($id);

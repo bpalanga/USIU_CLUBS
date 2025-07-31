@@ -9,16 +9,18 @@ function fetch_all_events() {
 
 function save_event($data) {
     global $pdo;
-    $stmt = $pdo->prepare("INSERT INTO events (title, category, description, date, time, location) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO events (title, category, description, date, time, location, created_by) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $data['title'],
         $data['category'],
         $data['description'],
         $data['date'],
         $data['time'],
-        $data['location']
+        $data['location'],
+        $data['created_by']
     ]);
 }
+
 
 function fetch_event_by_id($id) {
     global $pdo;

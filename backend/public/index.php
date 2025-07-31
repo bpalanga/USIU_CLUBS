@@ -1,4 +1,6 @@
 <?php
+// === start session ===
+session_start();
 // === CORS HEADERS ===
 header("Access-Control-Allow-Origin: *"); // or set specific origin instead of '*'
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
