@@ -1,10 +1,12 @@
 // Base_url for API requests
-const baseUrl = 'https://93871a9004df.ngrok-free.app'
+export const baseUrl = 'https://a55bff6dde79.ngrok-free.app'
 
 
 
 export const store = {
   events:null,
+  user: null,
+  my_events:[],
 }
 
 // Events endpoints
@@ -49,3 +51,46 @@ export async function fetchComments(eventId) {
     return [];
   }
 }
+
+
+// ===== AUTH =====
+// export async function signupCaptain(email, password, club_name) {
+//   const res = await fetch(`${baseUrl}/api/signup`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "ngrok-skip-browser-warning": "true"
+//     },
+//     body: JSON.stringify({ email, password, club_name })
+//   });
+
+//   if (!res.ok) throw new Error("Signup failed");
+//   const user = await res.json();
+
+//   store.user = user;
+//   localStorage.setItem("user", JSON.stringify(user));
+//   return user;
+// }
+
+// export async function loginCaptain(email, password) {
+//   const res = await fetch(`${baseUrl}/api/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "ngrok-skip-browser-warning": "true"
+//     },
+//     body: JSON.stringify({ email, password })
+//   });
+
+//   if (!res.ok) throw new Error("Login failed");
+//   const user = await res.json();
+
+//   store.user = user;
+//   localStorage.setItem("user", JSON.stringify(user));
+//   return user;
+// }
+
+// export function logoutCaptain() {
+//   store.user = null;
+//   localStorage.removeItem("user");
+// }

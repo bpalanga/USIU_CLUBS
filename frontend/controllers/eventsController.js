@@ -1,0 +1,80 @@
+import { fetchEvents, store, fetchComments } from "../data.js";
+import { eventCard } from "../views/events/eventsView.js";
+import { registerForm } from "../views/forms/registerForm.js";
+import { eventDetailsView } from "../views/events/eventDetailsView.js";
+import { commentForm } from "../views/forms/commentForm.js";
+
+const container = document.getElementById("events-container");
+
+export async function renderEventList() {
+  if (!store.events) {
+    await fetchEvents();
+  }
+  container.innerHTML = store.events.map(event => eventCard(event)).join("");
+}
+
+export async function renderEventDetails(eventId) {
+  const event = store.events?.find(ev => ev.id == eventId);
+  if (!event) {
+    container.innerHTML = `<p>Event not found.</p>`;
+    return;
+  }
+
+  container.innerHTML = eventDetailsView(event);
+
+  // Load comments from API
+  const comments = await fetchComments(eventId);
+  document.getElementById("comments-container").innerHTML = comments
+    .map(c => `<p><b>${c.name}:</b> ${c.comment}</p>`)
+    .join("");
+
+  // Add comment form
+  document.getElementById("comment-form-section").innerHTML = commentForm(eventId);
+
+  // Handle comment submission
+  document.getElementById("commentForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = {
+      eventId,
+      name: document.getElementById("commentName").value,
+      comment: document.getElementById("commentText").value
+    };
+    await postComment(data);
+    renderEventDetails(eventId); // Reload comments
+  });
+}
+
+export function setupEventDelegation() {
+  container.addEventListener("click", (e) => {
+    // Register button popup
+    if (e.target.classList.contains("register-btn")) {
+      const eventId = e.target.dataset.id;
+      const existingPopup = document.getElementById("popup");
+      if (existingPopup) existingPopup.remove();
+
+      document.body.insertAdjacentHTML("beforeend", registerForm(eventId));
+
+      document.getElementById("closePopup").addEventListener("click", () => {
+        document.getElementById("popup").remove();
+      });
+
+      document.getElementById("registrationForm").addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        const data = {
+          eventId,
+          name: document.getElementById("fullName").value,
+          email: document.getElementById("email").value
+        };
+        console.log("Submitting registration:", data);
+        document.getElementById("popup").remove();
+      });
+    }
+
+    // Details button routing
+    if (e.target.classList.contains("details-btn")) {
+      const eventId = e.target.dataset.id;
+      history.pushState({}, "", `/event/${eventId}`);
+      renderEventDetails(eventId);
+    }
+  });
+}
