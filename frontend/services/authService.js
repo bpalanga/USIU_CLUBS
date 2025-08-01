@@ -31,7 +31,7 @@ export async function signup(email, password, club_name) {
   }
 
   const data = await res.json();
-  return data.user; // return only the user object
+  return data.user; 
 }
 
 export function getCurrentUser() {

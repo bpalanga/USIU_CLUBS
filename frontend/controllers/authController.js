@@ -46,32 +46,37 @@ export function setupAuthDelegation() {
   });
 }
 
+export function logout() {
+  localStorage.removeItem("user"); 
+  alert("You have been logged out.");
+  updateUIForAuth(); 
+  history.pushState({}, "", "/"); 
+  window.dispatchEvent(new PopStateEvent("popstate")); 
+}
 
 export function updateUIForAuth() {
   const user = getCurrentUser();
-  const createEventBtn = document.getElementById("createEventBtn");
   const dashboardBtn = document.getElementById("dashboardBtn");
+  const authNav = document.getElementById("authNav");
+  const authUserNav = document.getElementById("authUserNav");
 
-  if (createEventBtn) {
-    if (user && user.role && user.role.toLowerCase() === "captain") {
-      createEventBtn.style.display = "inline-block";
-    } else {
-      createEventBtn.style.display = "none";
-    }
-  }
+  if (user && user.role && user.role.toLowerCase() === "captain") {
+    authUserNav.style.display = "block";
+    authNav.style.display = "none";
 
-  if (dashboardBtn) {
-    if (user && user.role && user.role.toLowerCase() === "captain") {
+    if (dashboardBtn) {
       dashboardBtn.style.display = "inline-block";
-
-      dashboardBtn.addEventListener("click", () => {
+      dashboardBtn.onclick = () => {
         history.pushState({}, "", "/captain-dashboard");
         window.dispatchEvent(new PopStateEvent("popstate"));
-      });
-    } else {
+      };
+    }
+  } else {
+    authNav.style.display = "block";
+    authUserNav.style.display = "none";
+
+    if (dashboardBtn) {
       dashboardBtn.style.display = "none";
     }
   }
 }
-
-

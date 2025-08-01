@@ -4,13 +4,14 @@ import { registerForm } from "../views/forms/registerForm.js";
 import { eventDetailsView } from "../views/events/eventDetailsView.js";
 import { commentForm } from "../views/forms/commentForm.js";
 
-const container = document.getElementById("events-container");
+const eventsContainer = document.getElementById("events-container");
+const container = document.getElementById("main");
 
 export async function renderEventList() {
   if (!store.events) {
     await fetchEvents();
   }
-  container.innerHTML = store.events.map(event => eventCard(event)).join("");
+  eventsContainer.innerHTML = store.events.map(event => eventCard(event)).join("");
 }
 
 export async function renderEventDetails(eventId) {
@@ -22,16 +23,23 @@ export async function renderEventDetails(eventId) {
 
   container.innerHTML = eventDetailsView(event);
 
-  // Load comments from API
+  // ===== LOAD COMMENTS  AND POST COMMENTS=====
   const comments = await fetchComments(eventId);
-  document.getElementById("comments-container").innerHTML = comments
-    .map(c => `<p><b>${c.name}:</b> ${c.comment}</p>`)
-    .join("");
+ document.getElementById("comments-container").innerHTML = comments
+  .map(c => `
+    <div class="event-details--comment-card">
+      <div class="event-details--comment-header">
+        <span class="event-details--comment-author">${c.name}</span>
+      </div>
+      <div class="event-details--comment-body">
+        ${c.comment}
+      </div>
+    </div>
+  `)
+  .join("");
 
-  // Add comment form
   document.getElementById("comment-form-section").innerHTML = commentForm(eventId);
 
-  // Handle comment submission
   document.getElementById("commentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = {

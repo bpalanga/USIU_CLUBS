@@ -10,7 +10,7 @@ export function commentForm(eventId) {
         </div>
         <div class="form-group">
           <label for="commentText">Comment</label>
-          <textarea id="commentText" placeholder="Your comment" required></textarea>
+          <textarea id="commentText" placeholder="Your comment" style="width:100%" required></textarea>
         </div>
         <button type="submit" class="submit-btn">Post Comment</button>
       </form>

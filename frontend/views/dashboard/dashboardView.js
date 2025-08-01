@@ -1,8 +1,11 @@
 export function dashboardView(events = []) {
   return `
-    <div>
-      <h2>Captain's Dashboard</h2>
-      <table border="1" cellpadding="8">
+    <div class="dashboard--container">
+      <h2 class="dashboard--title">Captain's Dashboard</h2>
+      <button id="createEventBtn" data-link href="/create-event">
+        Create Event
+      </button> 
+      <table class="dashboard--table">
         <thead>
           <tr>
             <th>Title</th>
@@ -14,7 +17,7 @@ export function dashboardView(events = []) {
         </thead>
         <tbody>
           ${events.length === 0 
-            ? `<tr><td colspan="5">No events found.</td></tr>` 
+            ? `<tr><td class="dashboard--empty" colspan="5">No events found.</td></tr>` 
             : events.map(ev => `
               <tr>
                 <td>${ev.title}</td>
@@ -22,8 +25,8 @@ export function dashboardView(events = []) {
                 <td>${ev.location}</td>
                 <td>${ev.registrations ? ev.registrations.length : 0}</td>
                 <td>
-                  <button class="view-registrations-btn" data-id="${ev.id}">View Registrations</button>
-                  <button class="edit-event-btn" data-id="${ev.id}">Edit</button>
+                  <button class="dashboard--btn dashboard--edit-btn delete-event-btn" data-id="${ev.id}">delete</button>
+                  <button class="dashboard--btn dashboard--edit-btn edit-event-btn" data-id="${ev.id}">Edit</button>
                 </td>
               </tr>
             `).join("")

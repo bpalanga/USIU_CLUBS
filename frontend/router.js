@@ -1,17 +1,15 @@
 import { renderEventList, renderEventDetails } from "./controllers/eventsController.js";
-import { renderCaptainDashboard } from "./controllers/dashboardController.js"; 
+import { renderCaptainDashboard } from "./controllers/dashboardController.js";
 import { fetchEvents, store } from "./data.js";
 import { loginView } from "./views/auth/loginView.js";
 import { signupView } from "./views/auth/signupView.js";
 
-
-// todo: remv the hereo and put main 
-const container = document.getElementById("main"); 
+const container = document.getElementById("main");
 
 export async function handleRouting() {
   const path = window.location.pathname;
 
-  // Event details route
+  // Event details
   if (path.startsWith("/event/")) {
     if (!store.events) {
       await fetchEvents();
@@ -21,18 +19,34 @@ export async function handleRouting() {
     return;
   }
 
-  // Auth routes
+  // LOGIN as popup
   if (path === "/login") {
-    container.innerHTML = loginView();
-    return;
+    const existingPopup = document.getElementById("popup");
+    if (existingPopup) existingPopup.remove();
+    document.body.insertAdjacentHTML("beforeend", loginView());
+
+   
+    document.getElementById("closePopup").addEventListener("click", () => {
+      document.getElementById("popup").remove();
+      history.pushState({}, "", "/");
+    });
+    return; 
   }
 
+  // SIGNUP as popup
   if (path === "/signup") {
-    container.innerHTML = signupView();
+    const existingPopup = document.getElementById("popup");
+    if (existingPopup) existingPopup.remove();
+    document.body.insertAdjacentHTML("beforeend", signupView());
+
+    document.getElementById("closePopup").addEventListener("click", () => {
+      document.getElementById("popup").remove();
+      history.pushState({}, "", "/");
+    });
     return;
   }
 
-  // Captain dashboard route
+
   if (path === "/captain-dashboard") {
     if (!store.events) {
       await fetchEvents();
@@ -41,6 +55,6 @@ export async function handleRouting() {
     return;
   }
 
-  // Default: event list
+  // Default 
   renderEventList();
 }

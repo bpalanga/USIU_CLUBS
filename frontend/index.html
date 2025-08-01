@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USIU-Africa Campus Events Portal</title>
-    <link rel="stylesheet" href="style.css">
+
+    <!-- link css here   -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- link js here   -->
     <script src="./app.js"  type="module" defer></script>
@@ -24,13 +27,15 @@
                     <li><a href="/" data-link>Home</a></li>
                     <li><a href="./index.html#event-section"><i class="fas fa-calendar-day"></i> Events</a></li>
                     <li><a href="#"><i class="fas fa-user-friends"></i> Clubs</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Notifications</a></li>
-                    <li id="authNav">
+                    <li class="authUserNav" id="authUserNav">
+                        <a href="#"><i class="fas fa-envelope"></i> Notifications</a>
+                        <a href="#" id="dashboardBtn">Dashboard</a>
+                        <a href="#" id="logoutBtn" data-link>Logout</a>
+                         
+                    </li>
+                    <li id="authNav" class="authNav">
                          <a href="/login" data-link>Login</a>
                          <a href="/signup" data-link>Signup</a>
-                         <button id="dashboardBtn">Dashboard</button>
-
-                        <!-- <div class="nav-button" id="loginBtn">Login / Sign Up</div> -->
                     </li>
                 </ul>
             </nav>
@@ -55,9 +60,6 @@
                 <button class="filter-btn">Hotel & Tourism</button>
                 <button class="filter-btn">Sports</button>
                 <button class="filter-btn">Academics</button>
-                <button id="createEventBtn" style="display:none;" data-link href="/create-event">
-                                Create Event
-                            </button>
             </div>
             
             <div class="events-grid" id="events-container">

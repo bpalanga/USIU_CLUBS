@@ -12,8 +12,7 @@ export function renderCaptainDashboard() {
     return;
   }
 
-  // For now, filter events created by this captain (mocked with user.id)
-  const captainEvents = (store.events || []).filter(ev => ev.captainId === user.id);
+  const captainEvents = (store.events || []).filter(ev => ev.created_by === user.id);
 
   container.innerHTML = dashboardView(captainEvents);
 }

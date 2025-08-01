@@ -1,7 +1,7 @@
 import { handleRouting } from "./router.js";
 import { setupEventDelegation } from "./controllers/eventsController.js";
 import { setupEventCreation } from "./controllers/eventCreationController.js";
-import { setupAuthDelegation, updateUIForAuth } from "./controllers/authController.js";
+import { setupAuthDelegation, updateUIForAuth ,logout} from "./controllers/authController.js";
 
 // SPA navigation
 document.body.addEventListener("click", (e) => {
@@ -13,6 +13,15 @@ document.body.addEventListener("click", (e) => {
     updateUIForAuth();
   }
 });
+
+
+document.body.addEventListener("click", (e) => {
+  if (e.target.id === "logoutBtn") {
+    e.preventDefault();
+    logout();
+  }
+});
+
 
 window.addEventListener("popstate", () => {
   handleRouting();
