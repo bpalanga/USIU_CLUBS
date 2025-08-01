@@ -1,4 +1,4 @@
-import { fetchEvents, store, fetchComments } from "../data.js";
+import { fetchEvents, store, fetchComments, postData, baseUrl } from "../data.js";
 import { eventCard } from "../views/events/eventsView.js";
 import { registerForm } from "../views/forms/registerForm.js";
 import { eventDetailsView } from "../views/events/eventDetailsView.js";
@@ -23,23 +23,22 @@ export async function renderEventDetails(eventId) {
 
   container.innerHTML = eventDetailsView(event);
 
-  // ===== LOAD COMMENTS  AND POST COMMENTS=====
+  // Load comments
   const comments = await fetchComments(eventId);
- document.getElementById("comments-container").innerHTML = comments
-  .map(c => `
-    <div class="event-details--comment-card">
-      <div class="event-details--comment-header">
-        <span class="event-details--comment-author">${c.name}</span>
+  document.getElementById("comments-container").innerHTML = comments
+    .map(c => `
+      <div class="event-details--comment-card">
+        <div class="event-details--comment-header">
+          <span class="event-details--comment-author">${c.name}</span>
+        </div>
+        <div class="event-details--comment-body">
+          ${c.comment}
+        </div>
       </div>
-      <div class="event-details--comment-body">
-        ${c.comment}
-      </div>
-    </div>
-  `)
-  .join("");
+    `).join("");
 
+  // Comment form
   document.getElementById("comment-form-section").innerHTML = commentForm(eventId);
-
   document.getElementById("commentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = {
@@ -47,21 +46,20 @@ export async function renderEventDetails(eventId) {
       name: document.getElementById("commentName").value,
       comment: document.getElementById("commentText").value
     };
-    await postComment(data);
-    renderEventDetails(eventId); // Reload comments
+    await postData(`${baseUrl}/api/events/${eventId}/comments`, data);
+    renderEventDetails(eventId);
   });
 }
 
 export function setupEventDelegation() {
   container.addEventListener("click", (e) => {
-    // Register button popup
+    // Register button
     if (e.target.classList.contains("register-btn")) {
       const eventId = e.target.dataset.id;
       const existingPopup = document.getElementById("popup");
       if (existingPopup) existingPopup.remove();
 
       document.body.insertAdjacentHTML("beforeend", registerForm(eventId));
-
       document.getElementById("closePopup").addEventListener("click", () => {
         document.getElementById("popup").remove();
       });
@@ -78,7 +76,7 @@ export function setupEventDelegation() {
       });
     }
 
-    // Details button routing
+    // View details
     if (e.target.classList.contains("details-btn")) {
       const eventId = e.target.dataset.id;
       history.pushState({}, "", `/event/${eventId}`);

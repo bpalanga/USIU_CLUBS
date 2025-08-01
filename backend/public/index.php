@@ -1,16 +1,23 @@
 <?php
 // === start session ===
+
 session_start();
 // === CORS HEADERS ===
-header("Access-Control-Allow-Origin: *"); // or set specific origin instead of '*'
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, ngrok-skip-browser-warning");
-header("Access-Control-Allow-Credentials: true");
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$allowed_origins = [
+    'http://127.0.0.1:5500', 
+    'http://localhost:5500',
+];
 
-// === Handle Preflight OPTIONS Request ===
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization, ngrok-skip-browser-warning");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204); // No Content
-    exit;
+    exit(0); 
 }
 
 // Always route through this index file
