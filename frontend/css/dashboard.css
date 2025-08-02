@@ -69,6 +69,33 @@
   background-color: rgb(239, 46, 46);
   color: var(--light-text);
 }
+#createEventBtn {
+  background-color: var(--usiu-blue);
+  color: var(--light-text);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s ease, transform 0.15s ease;
+  margin-bottom: 1rem;
+}
+
+#createEventBtn:hover {
+  background-color: var(--usiu-gold);
+  color: var(--dark-text);
+  transform: translateY(-1px);
+}
+
+#createEventBtn:active {
+  transform: translateY(0);
+}
+
 
 .dashboard--view-btn:hover {
   background-color: var(--usiu-gold);

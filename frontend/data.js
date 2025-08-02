@@ -19,7 +19,8 @@ export async function getData(url) {
   try {
     const response = await fetch(url, {
       method: "GET",
-      headers: defaultHeaders
+      headers: defaultHeaders,
+      credentials: "include" 
     });
     if (!response.ok) throw new Error(`GET ${url} failed`);
     return await response.json();
@@ -50,6 +51,7 @@ export async function putData(url, data) {
     const response = await fetch(url, {
       method: "PUT",
       headers: defaultHeaders,
+      credentials: "include",
       body: JSON.stringify(data)
     });
     if (!response.ok) throw new Error(`PUT ${url} failed`);
@@ -64,7 +66,8 @@ export async function deleteData(url) {
   try {
     const response = await fetch(url, {
       method: "DELETE",
-      headers: defaultHeaders
+      headers: defaultHeaders,
+      credentials: "include"
     });
     if (!response.ok) throw new Error(`DELETE ${url} failed`);
     return await response.json();
@@ -94,7 +97,7 @@ export async function fetchComments(eventId) {
   }
 }
 
-// ===== Example: Fetch Registrations (Placeholder) =====
+// ===== Fetch Registrat=====
 export async function fetchRegistrations(eventId) {
   try {
     return await getData(`${baseUrl}/api/events/${eventId}/registrations`) || [];
@@ -103,3 +106,30 @@ export async function fetchRegistrations(eventId) {
     return [];
   }
 }
+
+// ===== FETCH NOTIFICATIONS =====
+async function fetchNotifications() {
+  try {
+    const response = await fetch(`${baseUrl}/api/notifications`, {
+      method: "GET",
+      headers: {
+        "ngrok-skip-browser-warning": true,
+        "Content-Type": "application/json"
+      },
+      credentials: "include" 
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch notifications: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Notifications:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    return [];
+  }
+}
+
+fetchNotifications();

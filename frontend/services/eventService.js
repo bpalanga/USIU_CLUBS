@@ -8,6 +8,7 @@ const headers = {
 export async function createEvent(eventData) {
   const res = await fetch(`${baseUrl}/api/events`, {
     method: "POST",
+    credentials: "include",
     headers: headers,
     body: JSON.stringify(eventData)
   });

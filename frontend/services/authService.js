@@ -8,6 +8,7 @@ export async function login(email, password) {
   const res = await fetch(`${baseUrl}/api/auth/signin`, {
     method: "POST",
     headers,
+    credentials: "include",
     body: JSON.stringify({ email, password })
   });
 
@@ -16,13 +17,14 @@ export async function login(email, password) {
   }
 
   const data = await res.json();
-  return data.user; // return only the user object
+  return data.user;
 }
 
 export async function signup(email, password, club_name) {
   const res = await fetch(`${baseUrl}/api/auth/signup`, {
     method: "POST",
     headers,
+    credentials: "include",
     body: JSON.stringify({ email, password, club_name })
   });
 

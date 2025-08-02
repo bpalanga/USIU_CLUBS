@@ -1,6 +1,7 @@
 import { getCurrentUser } from "../services/authService.js";
 import { createEventForm } from "../views/forms/createEventForm.js";
 import { baseUrl, postData, putData, deleteData,defaultHeaders } from "../data.js";
+import { renderEventList } from "./eventsController.js";
 
 export function setupEventCreation() {
   document.body.addEventListener("click", async (e) => {
@@ -55,6 +56,8 @@ export function setupEventCreation() {
         await deleteData(`${baseUrl}/api/events/${eventId}`);
         alert("Event deleted successfully!");
       }
+      store.events = store.events.filter(ev => ev.id !== eventId);
+      renderEventList();
     }
   });
 }
